@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="icon/bootstrap-icons.css.map">
+    <script src=https://unpkg.com/axios/dist/axios.min.js></script>
+    <style>
+        *{
+            padding: 0;margin: 0;box-sizing: border-box;
+        }
+        main{
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url(Screenshot\ \(744\).jpg);
+            background-size: contain;
+            background-position: center;
+        
+        }
+        /*#1b2b3a */
+        section{
+            width: 600px;
+            height: 80px;
+            border-radius: 50px;
+            padding: 20px;
+            font-size: 25px;
+            font-family: font1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color:  #c79b8a;
+            border: 1px solid white;
+            position: relative;
+
+        }
+        input{
+            width: 80%;
+            height: 100%;
+            background-color: transparent;
+            padding: 10px;
+            font-size: 25px;
+            color:#1b2b3a ;
+            border-radius: 30px;
+            background-color: transparent;
+            border: 1px solid transparent;
+            font-family: font1;
+        }
+        button{
+            width: 150px;
+            height: 50px;
+            font-family: font1;
+            background: transparent;
+            border: 1px solid transparent;
+            font-size: 20px;
+            cursor: pointer;
+            transition: .4s;
+            &:hover{
+                scale: 1.2;
+            }
+        }
+        #list{
+
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            height: fit-content;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: start;
+            align-content: start;
+            background-color: #c79b8aaf;
+            border-radius: 20px;
+            margin-top: 10px;
+        }
+        @font-face {
+            font-family: font1;
+            src: url(Salsa/Salsa-Regular.ttf);
+        }
+        li{
+            height: 30px;
+            width: 100%;
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            margin-top: 2px;
+            font-size: 15px;
+            display: none;
+            padding: 10px;
+            cursor: pointer;
+
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <section>
+            <input onkeyup="func1(event)" type="search" placeholder="type ..." spellcheck="false">
+            <button>Search</button>
+            <ul id="list"></ul>
+        </section>
+        
+    </main>
+    <script>
+        let _search = document.getElementsByTagName('input')[0]
+        let _list = document.getElementById('list')
+      
+        let arr = []
+        const fetchUsers = () => {
+            axios.get( `https://fakestoreapi.com/products`)
+                .then(response => {
+                    arr = response.data;
+                    arr.map((val)=>{
+                        let _li = document.createElement('li')
+                        let parts = (val.title).split(" ")
+                        let txt = ''
+                        for(let i=0;i<4;i++){
+                            txt += parts[i]
+                        }
+                        _li.innerHTML = `${txt}`
+                        _list.appendChild(_li)
+                    })
+
+                })
+                .catch(error => console.error(error));
+        };
+        
+        fetchUsers();
+                function func1(e){
+            let temp = e.target.value
+            let _lis = document.querySelectorAll('#list li')
+            _lis.forEach((item)=>{
+                item.style.display = 'none'
+                item.addEventListener('click',(e)=>{
+                    _search.value = e.target.innerHTML
+                    _lis.forEach((itemm)=>{
+                        itemm.style.display = 'none'
+                      
+                    })
+
+                })
+            })
+            if(temp.length!=0){
+                _lis.forEach((val)=>{
+                    if(((val.innerHTML.toLowerCase()).slice(0,temp.length))==temp){
+                        val.style.display = 'block'
+                    }
+                })
+            }
+        }
+ 
+    </script>
+    
+</body>
+</html>

@@ -1,4 +1,5 @@
 # trick32-search
+![pic](https://github.com/katayoon-faraji-web/trick32-search/assets/144775981/d496d10c-71e7-4fa3-8f5e-035ba78ab92a)
 
 - [Demo Project](https://katayoon-faraji-web.github.io/project15-weatherForecast/)
 
